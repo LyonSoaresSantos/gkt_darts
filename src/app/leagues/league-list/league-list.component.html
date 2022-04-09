@@ -1,0 +1,35 @@
+<div class="content-wrapper">
+
+    <div class="d-flex justify-content-center" *ngIf="isLoading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  
+    <div class="col 6">
+      <div class="row">
+        <div class="col-sm-12">
+  
+          <h1 style="text-align: center;">Leagues</h1>
+        </div>
+        <div class="col-sm-3"  *ngFor="let l of leagues">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h4 style="text-align: center;">{{l.title}}</h4>
+              <p style="text-align: center;">{{l.content}}</p>
+            </div>
+            <div class="icon">
+              <i class="nav-icon fas fa-trophy"></i>
+            </div>
+            <a [routerLink]="['/home/league-detail', l.id]" class="small-box-footer">
+              More info <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </div>
+  
