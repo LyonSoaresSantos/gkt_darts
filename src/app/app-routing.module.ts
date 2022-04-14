@@ -5,7 +5,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { LeagueDetailsComponent } from './leagues/league-details/league-details.component';
 import { LeagueListComponent } from './leagues/league-list/league-list.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -57,11 +59,11 @@ const routes: Routes = [
       //   canActivate: [AuthGuard],
       // },
 
-      // {
-      //   path: 'league-detail/:id',
-      //   component: LeagueDetailsComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'league-detail/:id',
+        component: LeagueDetailsComponent,
+        canActivate: [AuthGuard],
+      },
 
       // {
       //   path: 'leagues-management/:id',
@@ -69,11 +71,17 @@ const routes: Routes = [
       //   canActivate: [AuthGuard],
       // },
 
-      // {
-      //   path: 'users',
-      //   component: UserComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'users',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'users/:id',
+        component: UserComponent,
+        canActivate: [AuthGuard],
+      },
 
       // {
       //   path: 'user-edit/:id',

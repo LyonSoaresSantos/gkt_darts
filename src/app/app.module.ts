@@ -19,6 +19,8 @@ import { LeagueCreateComponent } from './leagues/league-create/league-create.com
 import { LeagueDetailsComponent } from './leagues/league-details/league-details.component';
 import { LeagueManComponent } from './leagues/league-man/league-man.component';
 import { LeagueManagementComponent } from './leagues/league-management/league-management.component';
+import { UserComponent } from './user/user.component';
+import { UserListComponent } from './user/user-list/user-list.component';
 
 
 
@@ -34,6 +36,8 @@ import { LeagueManagementComponent } from './leagues/league-management/league-ma
     LeagueDetailsComponent,
     LeagueManComponent,
     LeagueManagementComponent,
+    UserComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

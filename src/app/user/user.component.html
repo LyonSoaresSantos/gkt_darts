@@ -1,0 +1,81 @@
+<div class="content-wrapper">
+    <div class="col-md-12">
+        <!-- Application buttons -->
+        <div class="text-center">
+            <h1>Users Management</h1>
+
+            <div class="card-body">
+                <a class="btn btn-app bg-primary" (click)="filterAllUsersTable()">
+                    <span class="badge bg-secondary">{{users.length}}</span>
+                    <i class="fas fa-users"></i> All Players
+                </a>
+
+                <a class="btn btn-app bg-success" (click)="filterByActivetoTable()">
+                    <span class="badge bg-secondary">{{active.length}}</span>
+                    <i class="fas fa-user"></i> Active Players
+                </a>
+                <a class="btn btn-app bg-warning" (click)="filterByPendingtoTable()">
+                    <span class="badge bg-secondary">{{pending.length}}</span>
+                    <i class="fas fa-user-clock"></i> Pending Activation
+                </a>
+                <a class="btn btn-app bg-danger" (click)="filterByDesactivetoTable()">
+                    <span class="badge bg-secondary">{{desactive.length}}</span>
+                    <i class="fas fa-user-slash"></i> Desactive Players
+
+                </a>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Nick</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>League</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let user of usersStatus">
+                                    <tr>
+                                        <td>{{user.nick}}</td>
+                                        <td>{{user.name}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.title}}</td>
+                                        <td *ngIf="user.status == 1" style="color: green; font:bold;">Active</td>
+                                        <td *ngIf="user.status == 2" style="color: red; font:bold;">Disable</td>
+                                        <td *ngIf="user.status == 3" style="color: royalblue; font:bold;">Pending
+                                            approval</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a class="btn btn-primary"
+                                                    [routerLink]="['/home/user-edit', user.id]"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <a href="#" class="btn btn-info"
+                                                    [routerLink]="['/home/profile', user.id]"><i
+                                                        class="fas fa-eye"></i></a>
+                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- /.card-body -->
+        </div>
+    </div>
+    <!-- <app-user-list></app-user-list> -->
+</div>

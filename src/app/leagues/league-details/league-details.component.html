@@ -1,1 +1,1471 @@
-<p>league-details works!</p>
+<div class="content-wrapper">
+  <div class="d-flex justify-content-center" *ngIf="isLoading">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
+  <!-- Content Header (Page header) -->
+  <section class="content-header" *ngIf="!isLoading">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>{{league1[0].title}}</h1>
+          <p
+            style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            {{league1[0].content}}</p>
+        </div>
+
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content" *ngIf="!isLoading">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body table-responsive p-100">
+              <div class="col-sm-12">
+                <h2 style="text-align: center;">Players</h2>
+              </div>
+
+              <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+                <thead>
+                  <tr>
+                    <th>Nick</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let user of users">
+                  <tr>
+                    <td>{{user.nick}}</td>
+                    <td>{{user.name}}</td>
+                    <td class="text-right py-0 align-middle">
+                      <div class="btn-group btn-group-sm">
+                        <a class="btn btn-primary" [routerLink]="['/home/user-edit', user.id]"><i
+                            class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-info" [routerLink]="['/home/profile', user.id]"><i
+                            class="fas fa-eye"></i></a>
+
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.col -->
+        <div *ngIf="isLoading">
+
+          <div class="col-md-9" *ngIf="!round1">
+            <h1 style="text-align: center;">Games Not Found</h1>
+          </div>
+        </div>
+        <div class="col-md-9" *ngIf="!isLoading && round1">
+          <div class="card">
+            <div class="card-header p-2">
+              <ul class="nav nav-pills">
+
+                <li class="nav-item"><a class="nav-link active" href="#table" data-toggle="tab">Table</a></li>
+                <li class="nav-item"><a class="nav-link" href="#games" data-toggle="tab">Games</a></li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body" *ngIf="!isLoading">
+              <div class="tab-content">
+
+
+                <!-- /.tab-pane -->
+                <div class=" active tab-pane" id="table" *ngIf="tableOn">
+
+
+                  <div class="card-header">
+
+                  </div>
+
+                  <div class="card-body table-responsive p-100">
+
+                    <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Team</th>
+                          <th>Pld</th>
+                          <th>W</th>
+                          <th>D</th>
+                          <th>L</th>
+                          <th>GF</th>
+                          <th>GA</th>
+                          <th>+/-</th>
+                          <th>Pts</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let tab of tabela; index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{tab.teamName}}</td>
+                          <td>{{tab.matchesPlayed}}</td>
+                          <td>{{tab.matchesWon}}</td>
+                          <td>{{tab.matchesDrawn}}</td>
+                          <td>{{tab.matchesLost}}</td>
+                          <td>{{tab.setHome}}</td>
+                          <td>{{tab.setAway}}</td>
+                          <td>{{tab.goalDifference}}</td>
+                          <td>{{tab.points}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="games">
+                  <!-- <div class="card-body"> -->
+
+                  <div class="row">
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 01</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <!-- <div class="card-body" style="display: block;"> -->
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let a of round1">
+                              <tr>
+                                <td>{{a.namehome}}</td>
+                                <td>{{a.sethome}}</td>
+                                <td>{{a.setaway}}</td>
+                                <td>{{a.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', a.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(a.id)" *ngIf="a.status == 2"><i class="fas fa-eye"></i></a>
+                                    <!-- *ngIf="a.status == 2" -->
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- </div> -->
+                      </div>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 02</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r2 of round2">
+                              <tr>
+                                <td>{{r2.namehome}}</td>
+                                <td>{{r2.sethome}}</td>
+                                <td>{{r2.setaway}}</td>
+                                <td>{{r2.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r2.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r2.id)" *ngIf="r2.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 03</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r3 of round3">
+                              <tr>
+                                <td>{{r3.namehome}}</td>
+                                <td>{{r3.sethome}}</td>
+                                <td>{{r3.setaway}}</td>
+                                <td>{{r3.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r3.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r3.id)" *ngIf="r3.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 04</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r4 of round4">
+                              <tr>
+                                <td>{{r4.namehome}}</td>
+                                <td>{{r4.sethome}}</td>
+                                <td>{{r4.setaway}}</td>
+                                <td>{{r4.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r4.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r4.id)" *ngIf="r4.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round5.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 05</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r5 of round5">
+                              <tr>
+                                <td>{{r5.namehome}}</td>
+                                <td>{{r5.sethome}}</td>
+                                <td>{{r5.setaway}}</td>
+                                <td>{{r5.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r5.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r5.id)" *ngIf="r5.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
+                      </div>
+
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round6.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 06</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r6 of round6">
+                              <tr>
+                                <td>{{r6.namehome}}</td>
+                                <td>{{r6.sethome}}</td>
+                                <td>{{r6.setaway}}</td>
+                                <td>{{r6.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r6.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r6.id)" *ngIf="r6.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round7.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 07</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r7 of round7">
+                              <tr>
+                                <td>{{r7.namehome}}</td>
+                                <td>{{r7.sethome}}</td>
+                                <td>{{r7.setaway}}</td>
+                                <td>{{r7.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r7.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r7.id)" *ngIf="r7.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round8.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 08</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r8 of round8">
+                              <tr>
+                                <td>{{r8.namehome}}</td>
+                                <td>{{r8.sethome}}</td>
+                                <td>{{r8.setaway}}</td>
+                                <td>{{r8.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r8.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r8.id)" *ngIf="r8.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm " *ngIf="round9.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 09</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r9 of round9">
+                              <tr>
+                                <td>{{r9.namehome}}</td>
+                                <td>{{r9.sethome}}</td>
+                                <td>{{r9.setaway}}</td>
+                                <td>{{r9.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r9.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r9.id)" *ngIf="r9.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round10.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 10</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r10 of round10">
+                              <tr>
+                                <td>{{r10.namehome}}</td>
+                                <td>{{r10.sethome}}</td>
+                                <td>{{r10.setaway}}</td>
+                                <td>{{r10.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r10.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r10.id)" *ngIf="r10.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round11.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 11</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r11 of round11">
+                              <tr>
+                                <td>{{r11.namehome}}</td>
+                                <td>{{r11.sethome}}</td>
+                                <td>{{r11.setaway}}</td>
+                                <td>{{r11.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r11.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r11.id)" *ngIf="r11.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round12.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 12</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r12 of round12">
+                              <tr>
+                                <td>{{r12.namehome}}</td>
+                                <td>{{r12.sethome}}</td>
+                                <td>{{r12.setaway}}</td>
+                                <td>{{r12.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r12.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r12.id)" *ngIf="r12.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round13.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 13</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r13 of round13">
+                              <tr>
+                                <td>{{r13.namehome}}</td>
+                                <td>{{r13.sethome}}</td>
+                                <td>{{r13.setaway}}</td>
+                                <td>{{r13.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r13.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r13.id)" *ngIf="r13.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round14.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 14</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r14 of round14">
+                              <tr>
+                                <td>{{r14.namehome}}</td>
+                                <td>{{r14.sethome}}</td>
+                                <td>{{r14.setaway}}</td>
+                                <td>{{r14.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r14.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r14.id)" *ngIf="r14.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round15.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 15</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r15 of round15">
+                              <tr>
+                                <td>{{r15.namehome}}</td>
+                                <td>{{r15.sethome}}</td>
+                                <td>{{r15.setaway}}</td>
+                                <td>{{r15.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r15.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r15.id)" *ngIf="r15.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round16.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 16</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r16 of round16">
+                              <tr>
+                                <td>{{r16.namehome}}</td>
+                                <td>{{r16.sethome}}</td>
+                                <td>{{r16.setaway}}</td>
+                                <td>{{r16.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r16.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r16.id)" *ngIf="r16.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round17.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 17</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r17 of round17">
+                              <tr>
+                                <td>{{r17.namehome}}</td>
+                                <td>{{r17.sethome}}</td>
+                                <td>{{r17.setaway}}</td>
+                                <td>{{r17.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r17.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r17.id)" *ngIf="r17.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round18.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 18</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r18 of round18">
+                              <tr>
+                                <td>{{r18.namehome}}</td>
+                                <td>{{r18.sethome}}</td>
+                                <td>{{r18.setaway}}</td>
+                                <td>{{r18.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r18.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r18.id)" *ngIf="r18.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round19.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 19</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r19 of round19">
+                              <tr>
+                                <td>{{r19.namehome}}</td>
+                                <td>{{r19.sethome}}</td>
+                                <td>{{r19.setaway}}</td>
+                                <td>{{r19.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r19.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r19.id)" *ngIf="r19.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round20.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 20</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r20 of round20">
+                              <tr>
+                                <td>{{r20.namehome}}</td>
+                                <td>{{r20.sethome}}</td>
+                                <td>{{r20.setaway}}</td>
+                                <td>{{r20.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r20.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r20.id)" *ngIf="r20.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round21.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 21</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r21 of round21">
+                              <tr>
+                                <td>{{r21.namehome}}</td>
+                                <td>{{r21.sethome}}</td>
+                                <td>{{r21.setaway}}</td>
+                                <td>{{r21.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r21.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r21.id)" *ngIf="r21.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round22.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 22</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r22 of round22">
+                              <tr>
+                                <td>{{r22.namehome}}</td>
+                                <td>{{r22.sethome}}</td>
+                                <td>{{r22.setaway}}</td>
+                                <td>{{r22.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r22.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r22.id)" *ngIf="r22.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round23.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 23</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r23 of round23">
+                              <tr>
+                                <td>{{r23.namehome}}</td>
+                                <td>{{r23.sethome}}</td>
+                                <td>{{r23.setaway}}</td>
+                                <td>{{r23.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r23.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r23.id)" *ngIf="r23.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="card card-secondary shadow-sm" *ngIf="round24.length">
+                        <div class="card-header">
+                          <h3 class="card-title">Round 24</h3>
+
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                          </div>
+
+                        </div>
+
+                        <div class="card-body table-responsive p-100">
+                          <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead>
+                              <tr>
+                                <th>Home</th>
+                                <th></th>
+                                <th></th>
+                                <th>Away</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let r24 of round24">
+                              <tr>
+                                <td>{{r24.namehome}}</td>
+                                <td>{{r24.sethome}}</td>
+                                <td>{{r24.setaway}}</td>
+                                <td>{{r24.nameaway}}</td>
+                                <td width="1px" height="1px">
+                                  <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-primary" [routerLink]="['/home/editMatch', r24.id]"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn btn-info" data-target="#myModal" data-toggle="modal"
+                                      (click)="openModal(r24.id)" *ngIf="r24.status == 2"><i class="fas fa-eye"></i></a>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <!-- </div> -->
+
+
+
+                </div>
+
+
+                <!-- /.tab-pane -->
+
+
+              </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+    <div *ngIf="meuModal == true">
+
+
+
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Round {{game1[0].round}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-12">
+                    <h1 *ngIf="game1[0].sethome > game1[0].setaway" style="text-align: center;">Winner:
+                      {{game1[0].namehome}}</h1>
+                    <h1 *ngIf="game1[0].sethome < game1[0].setaway" style="text-align: center;">Winner:
+                      {{game1[0].nameaway}}</h1>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="card card-widget widget-user shadow">
+                      <div class="widget-user-header bg-primary">
+                        <h3 class="widget-user-username">{{game1[0].home}}</h3>
+                        <h5 class="widget-user-desc">{{game1[0].namehome}}</h5>
+                      </div>
+
+                      <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src={{game1[0].homeimage}} alt="User Avatar">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="card card-widget widget-user shadow">
+                      <div class="widget-user-header bg-primary">
+                        <h3 class="widget-user-username">{{game1[0].away}}</h3>
+                        <h5 class="widget-user-desc">{{game1[0].nameaway}}</h5>
+                      </div>
+
+                      <div class="widget-user-image">
+                        <img class="img-circle elevation-2" src={{game1[0].awayimage}} alt="User Avatar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card card-widget widget-user shadow">
+
+
+
+
+
+
+                  <!-- <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username">Alexander Pierce</h3>
+                    <h5 class="widget-user-desc">Founder &amp; CEO</h5>
+                  </div>
+                  <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
+                  </div> -->
+
+
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                          <h5 class="description-header">{{game1[0].sethome}}</h5>
+                          <h5 class="description-header">{{game1[0].leghome}}</h5>
+                          <h5 class="description-header">{{game1[0].average3home}}</h5>
+                          <h5 class="description-header">{{game1[0].average1home}}</h5>
+                          <h5 class="description-header">{{game1[0].highouthome}}</h5>
+                          <h5 class="description-header">{{game1[0].bestleghome}}</h5>
+                          <h5 class="description-header">{{game1[0].g100home}}</h5>
+                          <h5 class="description-header">{{game1[0].g140home}}</h5>
+                          <h5 class="description-header">{{game1[0].g170home}}</h5>
+                          <h5 class="description-header">{{game1[0].g180home}}</h5>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4 border-right">
+                        <div class="description-block">
+                          <h5 class="description-header">Sets</h5>
+                          <h5 class="description-header">Legs</h5>
+                          <h5 class="description-header">Average(3)</h5>
+                          <h5 class="description-header">Average(1)</h5>
+                          <h5 class="description-header">Highest Out</h5>
+                          <h5 class="description-header">Best Leg</h5>
+                          <h5 class="description-header">100+</h5>
+                          <h5 class="description-header">140+</h5>
+                          <h5 class="description-header">170+</h5>
+                          <h5 class="description-header">180s</h5>
+
+
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-sm-4">
+                        <div class="description-block">
+                          <h5 class="description-header">{{game1[0].setaway}}</h5>
+                          <h5 class="description-header">{{game1[0].legaway}}</h5>
+                          <h5 class="description-header">{{game1[0].average3away}}</h5>
+                          <h5 class="description-header">{{game1[0].average1away}}</h5>
+                          <h5 class="description-header">{{game1[0].highoutaway}}</h5>
+                          <h5 class="description-header">{{game1[0].bestlegaway}}</h5>
+                          <h5 class="description-header">{{game1[0].g100away}}</h5>
+                          <h5 class="description-header">{{game1[0].g140away}}</h5>
+                          <h5 class="description-header">{{game1[0].g170away}}</h5>
+                          <h5 class="description-header">{{game1[0].g180away}}</h5>
+                        </div>
+                        <!-- /.description-block -->
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
