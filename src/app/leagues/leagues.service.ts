@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { League } from './league.model';
 import { map } from 'rxjs/operators';
 import { Matches } from '../matches/matches.model';
-import  Swal  from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 const BACKEND_URL = environment.apiUrl + '/leagues/';
 const BACKEND_GAMES = environment.apiUrl + '/games/league-games/';
@@ -15,7 +15,6 @@ const BACKEND_USERLEAGUE = environment.apiUrl + '/leagues/userleague';
 @Injectable({ providedIn: 'root' })
 export class LeagueService {
   private camps: any;
-  // private leagues: League[] = [];
   private matches: any;
   private leaguesUpdated = new Subject<League[]>();
   private leagueUpdated = new Subject<League[]>();
@@ -23,44 +22,35 @@ export class LeagueService {
   leagues: any;
   league: any;
 
+  constructor(private http: HttpClient, private router: Router) { }
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  addLeague(title: string, content: string, type: number) {
-    // const leagueData = new FormData();
-    // leagueData.append('title', title);
-    // leagueData.append('content', content);
+  addLeague(title: string, content: string, type: number, status: number) {
     const leagueData: League = {
       title: title,
       content: content,
       id: '',
       type: type,
+      status: 1
     };
-    console.log(leagueData);
     this.http
       .post<{ message: string; league: League }>(BACKEND_URL, leagueData)
       .subscribe((responseData) => {
-        this.router.navigate(['/home/users']);
+        this.router.navigate(['/home/leagues-management']);
       });
   }
 
-  updateLeague(id: string, title: string, content: string, type: number) {
+  updateLeague(id: string, title: string, content: string, type: number, status: number) {
     let leagueData: League | FormData;
-    // if (typeof image === 'object') {
-    //   leagueData = new FormData();
-    //   leagueData.append('id', id);
-    //   leagueData.append('title', title);
-    //   leagueData.append('content', content);
-    // } else {
     leagueData = {
       id: id,
       title: title,
       content: content,
       type: type,
+      status: status
     };
 
     this.http.put(BACKEND_URL + id, leagueData).subscribe((response) => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home/leagues-management']);
     });
   }
 
@@ -70,6 +60,7 @@ export class LeagueService {
       title: string;
       content: string;
       type: number;
+      status: number;
     }>(BACKEND_URL + id);
   }
 
@@ -84,15 +75,10 @@ export class LeagueService {
     return this.leagueUpdated.asObservable();
   }
 
-
-
-
-
   getLeagues() {
     this.http.get<{ data: any }>(BACKEND_URL).subscribe((leagueData) => {
       this.camps = leagueData;
       this.leaguesUpdated.next([...this.camps.data]);
-      console.log(leagueData)
     });
   }
 
@@ -115,25 +101,29 @@ export class LeagueService {
   addUsersLeague(gameData) {
     this.http
       .post<{ message: string; matches: Matches }>(BACKEND_USERLEAGUE, gameData)
-      .subscribe((responseData) => {
-        this.router.navigate(['/home/leagues-management']);
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Users to the Leagues Saved!',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      },
-      (error) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Something went wrong!',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
-      );
+      .subscribe({
+        next: (v) => {
+          this.router.navigate(['/home/leagues-management']);
+        },
+        error: (e) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Something went wrong!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        },
+        complete: () => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Users to the Leagues Saved!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+
+        }
+      })
   }
 }

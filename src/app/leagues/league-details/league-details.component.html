@@ -1,10 +1,9 @@
 <div class="content-wrapper">
   <div class="d-flex justify-content-center" *ngIf="isLoading">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
   </div>
-  <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
+
   <!-- Content Header (Page header) -->
   <section class="content-header" *ngIf="!isLoading">
     <div class="container-fluid">

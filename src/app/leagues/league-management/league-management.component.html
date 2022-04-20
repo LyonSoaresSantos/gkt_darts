@@ -1,1 +1,89 @@
-<p>league-management works!</p>
+<div class="content-wrapper">
+  <div class="d-flex justify-content-center" *ngIf="isLoading">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  </div>
+  <div class="text-center" *ngIf="!isLoading">
+    <h1>
+      {{league1[0].title}}
+    </h1>
+
+
+
+    <div class="col-md-12" *ngIf="!isLoading">
+      <!-- Application buttons -->
+      <div class="text-center">
+
+        <div class="card-body">
+          <a class="btn btn-app bg-secondary">
+
+            <i class="fas fa-barcode" (click)="listPlayers()"></i> List Players
+          </a>
+          <a class="btn btn-app bg-success">
+
+            <i class="fas fa-users" (click)="select()"></i> Add Users
+          </a>
+          <a class="btn btn-app bg-danger">
+
+            <i class="fas fa-inbox" (click)="createGames()"></i> Create Games
+          </a>
+          <a class="btn btn-app bg-warning">
+
+            <i class="fas fa-envelope" (click)="makeRoundRobinPairings()"></i> Update Users
+          </a>
+          <a class="btn btn-app bg-info">
+
+            <i class="fas fa-heart"></i> Likes
+          </a>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+      <div class="col-md-12" *ngIf="theSelect">
+        <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+          (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+        <button type="submit" class="btn btn-primary" (click)="save(selectedItems)">Save Players</button>
+      </div>
+
+      <div class="col-md-12" *ngIf="playersListed">
+        <div class="card card-primary card-outline">
+          <div class="card-body table-responsive p-100">
+            <div class="col-sm-12">
+              <h2 style="text-align: center;">Players</h2>
+            </div>
+
+            <table id="example1" class="table table-bordered table-hover dataTable dtr-inline">
+              <thead>
+                <tr>
+                  <th>Nick</th>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of users">
+                <tr>
+                  <td>{{user.nick}}</td>
+                  <td>{{user.name}}</td>
+                  <td>
+                    <div class="btn-group btn-group-sm">
+                      <a class="btn btn-primary" [routerLink]="['/home/user-edit', user.id]"><i
+                          class="fas fa-edit"></i></a>
+                      <a href="#" class="btn btn-info" [routerLink]="['/home/profile', user.id]"><i
+                          class="fas fa-eye"></i></a>
+
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

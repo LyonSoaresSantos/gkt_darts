@@ -5,8 +5,13 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { LeagueCreateComponent } from './leagues/league-create/league-create.component';
 import { LeagueDetailsComponent } from './leagues/league-details/league-details.component';
 import { LeagueListComponent } from './leagues/league-list/league-list.component';
+import { LeagueManComponent } from './leagues/league-man/league-man.component';
+import { LeagueManagementComponent } from './leagues/league-management/league-management.component';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -18,34 +23,23 @@ const routes: Routes = [
     component: HeaderComponent,
     canActivate: [AuthGuard],
     children: [
-      // {
-      //   path: 'create',
-      //   component: PostCreateComponent,
-      //   canActivate: [AuthGuard],
-      // },
-      // {
-      //   path: 'edit/:postId',
-      //   component: PostCreateComponent,
-      //   canActivate: [AuthGuard],
-      // },
-
-      {
+           {
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard],
       },
 
-      // {
-      //   path: 'create-league',
-      //   component: LeagueCreateComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'create-league',
+        component: LeagueCreateComponent,
+        canActivate: [AuthGuard],
+      },
 
-      // {
-      //   path: 'edit-league/:leagueId',
-      //   component: LeagueCreateComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'edit-league/:leagueId',
+        component: LeagueCreateComponent,
+        canActivate: [AuthGuard],
+      },
 
       {
         path: 'leagues',
@@ -53,11 +47,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
 
-      // {
-      //   path: 'leagues-management',
-      //   component: LeagueManComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'leagues-management',
+        component: LeagueManComponent,
+        canActivate: [AuthGuard],
+      },
 
       {
         path: 'league-detail/:id',
@@ -65,11 +59,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
 
-      // {
-      //   path: 'leagues-management/:id',
-      //   component: LeagueManagementComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'leagues-management/:id',
+        component: LeagueManagementComponent,
+        canActivate: [AuthGuard],
+      },
 
       {
         path: 'users',
@@ -83,17 +77,17 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
 
-      // {
-      //   path: 'user-edit/:id',
-      //   component: UserEditComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'user-edit/:id',
+        component: UserEditComponent,
+        canActivate: [AuthGuard],
+      },
 
-      // {
-      //   path: 'profile/:id',
-      //   component: UserProfileComponent,
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'profile/:id',
+        component: UserProfileComponent,
+        canActivate: [AuthGuard],
+      },
 
       // {
       //   path: 'matches',

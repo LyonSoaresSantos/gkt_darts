@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './error/error.component';
@@ -20,7 +20,11 @@ import { LeagueDetailsComponent } from './leagues/league-details/league-details.
 import { LeagueManComponent } from './leagues/league-man/league-man.component';
 import { LeagueManagementComponent } from './leagues/league-management/league-management.component';
 import { UserComponent } from './user/user.component';
-import { UserListComponent } from './user/user-list/user-list.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { NgChartsModule } from 'ng2-charts';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 
 
 
@@ -37,16 +41,19 @@ import { UserListComponent } from './user/user-list/user-list.component';
     LeagueManComponent,
     LeagueManagementComponent,
     UserComponent,
-    UserListComponent,
+    LoadingSpinnerComponent,
+    UserProfileComponent,
+    UserEditComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-
+    NgChartsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularMultiSelectModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [

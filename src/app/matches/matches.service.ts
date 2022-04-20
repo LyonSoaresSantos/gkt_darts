@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import  Swal  from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 import { map } from 'rxjs/operators';
 import { Matches } from './matches.model';
@@ -18,32 +18,35 @@ export class MatchesService {
   private matchesUpdated = new Subject<Matches[]>();
   private matchUpdated = new Subject<Matches[]>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   addGames(gameData) {
-    console.log(gameData);
+    console.log(gameData)
     this.http
       .post<{ message: string; matches: Matches }>(BACKEND_URL, gameData)
-      .subscribe((responseData) => {
-        this.router.navigate(['/home/users']);
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Game Created!',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      },
-      (error) => {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Something went wrong!',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
-      );
+      .subscribe({
+        next: (v) => {
+          this.router.navigate(['home/leagues-management']);
+        },
+        error: (e) => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Something went wrong!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        },
+        complete: () => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Game Created!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+      })
   }
 
   getMatchById(id: string) {
@@ -137,7 +140,7 @@ export class MatchesService {
         timer: 2000
       })
     }
-    ,
+      ,
       (error) => {
         Swal.fire({
           position: 'top-end',

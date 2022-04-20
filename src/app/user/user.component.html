@@ -1,5 +1,9 @@
 <div class="content-wrapper">
-    <div class="col-md-12">
+    <div class="d-flex justify-content-center" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      
+      </div>
+    <div class="col-md-12" *ngIf="!isLoading">
         <!-- Application buttons -->
         <div class="text-center">
             <h1>Users Management</h1>

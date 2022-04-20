@@ -1,0 +1,262 @@
+<div class="content-wrapper">
+    <div class="d-flex justify-content-center" *ngIf="isLoading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <!-- <mat-spinner *ngIf="isLoading"></mat-spinner> -->
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Profile</h1>
+          </div>
+  
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+  
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle" src={{user1[0].imagepath}}
+                    alt="User profile picture">
+                </div>
+  
+                <h3 class="profile-username text-center">{{user1[0].nick}}</h3>
+  
+                <p class="text-muted text-center">{{user1[0].name}}</p>
+  
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Games Played</b> <a class="float-right">Not Ready</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Best Leg</b> <a class="float-right">Not Ready</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Average</b> <a class="float-right">Not Ready</a>
+                  </li>
+                </ul>
+  
+                <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+  
+            <!-- About Me Box -->
+            <!-- <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <!-- /.card-header -->
+            <!-- <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+  
+                <p class="text-muted">
+                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                </p>
+  
+                <hr>
+  
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+  
+                <p class="text-muted">Malibu, California</p>
+  
+                <hr>
+  
+                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+  
+                <p class="text-muted">
+                  <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span>
+                </p>
+  
+                <hr>
+  
+                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+  
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              </div> -->
+            <!-- /.card-body -->
+            <!-- </div> -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9" *ngIf="!isLoading">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+  
+                  <li class="nav-item"><a class="nav-link active" href="#games" data-toggle="tab">Matches</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#stats" data-toggle="tab">Stats</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#charts" data-toggle="tab" (click)="openCharts()">Charts</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+  
+  
+                  <!-- /.tab-pane -->
+                  <div class=" active tab-pane" id="games">
+                    <div class="card-body" style="display: block;">
+                      <div class="card-header">
+  
+                      </div>
+                      <div class="card-body table-responsive p-100">
+                        <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                          <thead>
+                            <tr>
+                              <th>Round</th>
+                              <th>Home</th>
+                              <th></th>
+                              <th></th>
+                              <th>Away</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngFor="let a of match1">
+                            <tr>
+                              <td>{{a.round}}</td>
+                              <td>{{a.namehome}}</td>
+                              <td>{{a.sethome}}</td>
+                              <td>{{a.setaway}}</td>
+                              <td>{{a.nameaway}}</td>
+                              <td width="1px" height="1px">
+                                <div class="btn-group btn-group-sm">
+                                  <a class="btn btn-primary" [routerLink]="['/home/editMatch', a.id]"><i
+                                      class="fas fa-edit"></i></a>
+                                  <!-- <a class="btn btn-info" [routerLink]="['/home/matchDetails', a.id]"><i
+                                      class="fas fa-eye"></i></a> -->
+                                  <!-- <a class="btn btn-info" data-target="#myModal" data-toggle="modal" (click)="openModal(a.id)"><i
+                                        class="fas fa-eye"></i></a> -->
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+  
+                  </div>
+                  <!-- /.tab-pane -->
+  
+                  <div class="tab-pane" id="stats">
+                    <div class="card-body" style="display: block;">
+                      <div class="card-header">
+  
+                      </div>
+                      <div class="card-body table-responsive p-100">
+                        <table id="example3" class="table table-bordered table-hover dataTable dtr-inline">
+                          <thead>
+                            <tr>
+                              <th>Round</th>
+                              <th>100s</th>
+                              <th>140s</th>
+                              <th>170s</th>
+                              <th>180+</th>
+                              <th>Highest Out</th>
+                              <th>Best Leg</th>
+                              <th>Average(1)</th>
+                              <th>Average(3)</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngFor="let b of stats1">
+                            <tr>
+                              <td>{{b.round}}</td>
+                              <td>{{b.g100}}</td>
+                              <td>{{b.g140}}</td>
+                              <td>{{b.g170}}</td>
+                              <td>{{b.g180}}</td>
+                              <td>{{b.highest}}</td>
+                              <td>{{b.bestleg}}</td>
+                              <td>{{b.average1}}</td>
+                              <td>{{b.average3}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+  
+  
+  
+                  </div>
+  
+                  <div class="tab-pane" id="charts" *ngIf="chartsOn">
+                    <div style="display: block;">
+                      <div baseChart width="400" height="400">
+                        <canvas baseChart  [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                          [legend]="barChartLegend" [chartType]="barChartType">
+                        </canvas>
+                      </div>
+                    </div>
+  
+                    <div>
+                      <div>
+                        <canvas baseChart [datasets]="barChartData1" [labels]="barChartLabels1" [options]="barChartOptions"
+                          [legend]="barChartLegend1" [chartType]="barChartType1">
+                        </canvas>
+                      </div>
+                    </div>
+  
+                    <div>
+                      <div>
+                        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions"
+                          [legend]="barChartLegend2" [chartType]="barChartType2">
+                        </canvas>
+                      </div>
+                    </div>
+  
+                    <div>
+                      <div>
+                        <canvas baseChart [datasets]="barChartData3" [labels]="barChartLabels3" [options]="barChartOptions"
+                          [legend]="barChartLegend3" [chartType]="barChartType3">
+                        </canvas>
+                      </div>
+                    </div>
+  
+                    <div>
+                      <div>
+                        <canvas baseChart [datasets]="barChartData4" [labels]="barChartLabels4" [options]="barChartOptions"
+                          [legend]="barChartLegend4" [chartType]="barChartType4">
+                        </canvas>
+                      </div>
+                    </div>
+  
+                    <div>
+                      <div>
+                        <canvas baseChart [datasets]="barChartData5" [labels]="barChartLabels5" [options]="barChartOptions"
+                          [legend]="barChartLegend5" [chartType]="barChartType5">
+                        </canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.tab-pane -->
+  
+  
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  

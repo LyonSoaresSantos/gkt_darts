@@ -3,4 +3,5 @@ export interface League {
   title: string;
   content: string;
   type: number;
+  status: number;
 }

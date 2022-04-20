@@ -7,6 +7,7 @@ import { User } from 'src/app/user/user.model';
 import { UserService } from 'src/app/user/user.service';
 import { League } from '../league.model';
 import { LeagueService } from '../leagues.service';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class LeagueDetailsComponent implements OnInit {
     private leagueService: LeagueService,
     private userService: UserService,
     private matchesService: MatchesService,
-    // private ngbModal: NgbModal,
+    private ngbModal: NgbModal,
     private route: ActivatedRoute
   ) { }
 
@@ -88,6 +89,43 @@ export class LeagueDetailsComponent implements OnInit {
    private matchbyIdSub: Subscription;
 
    isLoading = false;
+   meuModal = false;
+
+   openModal(x) {
+    console.log(x);
+    // this.gameId = x;
+    this.matchById = this.matchesService.getMatchById(x);
+    this.matchbyIdSub = this.matchesService
+      .getMatchUpdateListener()
+      .subscribe((matchById) => {
+        this.matchById = matchById;
+        this.game1 = this.matchById;
+        console.log(this.game1);
+      });
+    this.meuModal = true;
+
+    // this.modalService.openModal(MatchDetailComponent);
+    // this.openLocalModal(template);
+  }
+  openLocalModal(
+    content: any,
+    size?: 'sm' | 'lg' | 'xl',
+    windowClass: string = 'compact'
+  ) {
+    if (size === 'xl') {
+      size = 'xl' as 'lg';
+    }
+    const ngbModalOptions: NgbModalOptions = {
+      backdrop: 'static',
+      keyboard: true,
+      size: size,
+    };
+    if (windowClass) {
+      ngbModalOptions.windowClass = windowClass;
+    }
+
+    return this.ngbModal.open(content, ngbModalOptions);
+  }
 
 
    //Calculo Tabela
@@ -122,7 +160,7 @@ export class LeagueDetailsComponent implements OnInit {
       // console.log(`promise result: ${value}`);
       this.getCurrentTable();
       this.tableOn = true;
-      // this.isLoading = false;
+      this.isLoading = false;
     });
 
     // console.log('I will not wait until promise is resolved');
@@ -494,7 +532,7 @@ export class LeagueDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.isLoading = true;
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       this.leagueId = paramMap.get('id');
 

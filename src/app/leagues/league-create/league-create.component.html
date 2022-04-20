@@ -1,1 +1,56 @@
-<p>league-create works!</p>
+<div class="content-wrapper">
+  <div class="text-center">
+
+    <section class="content-header">
+
+      <div class="container-fluid">
+        <div class="row mb-12">
+          <div class="col-sm-12">
+            <h1>Create League</h1>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="col-sm-6">
+      <div class="card card-secondary">
+
+        <form [formGroup]="form" (submit)="onSaveLeague()">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" formControlName="title" placeholder="League Title">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nick</label>
+              <input type="text" class="form-control" formControlName="content" placeholder="League Content">
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label>Format</label>
+                  <select class="form-control" formControlName="type">
+                    <option value="1">League</option>
+                    <option value="2">Cup</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

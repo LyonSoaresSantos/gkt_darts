@@ -56,6 +56,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userService.getUsers();
     this.usersSub = this.userService
       .getUserUpdateListener()
@@ -68,6 +69,7 @@ export class UserComponent implements OnInit {
       this.userService.getUsersStatus();
       this.usersStatusSub = this.userService.getUserStatusUpdateListener().subscribe((usersStatus: User[]) => {
         this.usersStatus = usersStatus;
+        this.isLoading = false;
       })
   }
 
